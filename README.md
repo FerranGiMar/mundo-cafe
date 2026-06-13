@@ -209,6 +209,24 @@ npm run dev
 
 [http://localhost:3000](http://localhost:3000)
 
+## Despliegue En Railway
+
+1. Crea un servicio PostgreSQL en el mismo proyecto de Railway.
+2. En el servicio `mundo-cafe`, configura estas variables:
+
+```env
+NODE_ENV=production
+SESSION_SECRET=pon-una-clave-larga-y-privada
+CORS_ORIGIN=https://tu-dominio-de-railway.up.railway.app
+DATABASE_URL=${{Postgres.DATABASE_URL}}
+```
+
+Railway asigna `PORT` automaticamente, asi que no hace falta crearlo manualmente.
+
+3. Pulsa `Apply changes` y despues `Deploy`.
+
+En el primer arranque, si la base de datos esta vacia, la aplicacion crea las tablas y carga los datos demo desde `sql/schema_mundo_cafe.sql` y `sql/seed_mundo_cafe.sql`.
+
 ## Usuarios Demo
 
 - Cliente principal: `ferran@mundocafe.com` / `DemoCafe2026`

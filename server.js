@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const fs = require('fs');
 const path = require('path');
 const session = require('express-session');
 const { Pool } = require('pg');
@@ -25,6 +26,8 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 const IS_PRODUCTION = NODE_ENV === 'production';
 const SESSION_SECRET = process.env.SESSION_SECRET || 'change-this-session-secret';
 const CORS_ORIGIN = process.env.CORS_ORIGIN || `http://localhost:${PORT}`;
+
+app.set('trust proxy', 1);
 
 const pool = new Pool(
     process.env.DATABASE_URL
@@ -222,6 +225,40 @@ async function ensureDatabaseCompatibility() {
                 [hashedPassword, usuario.id_usuario]
             );
         }
+    }
+}
+
+async function initializeDatabaseIfNeeded() {
+    const schemaExists = await pool.query(
+        "SELECT to_regclass('public.usuarios') AS table_name"
+    );
+    const needsSchema = !schemaExists.rows[0].table_name;
+
+    if (needsSchema) {
+        const schemaSql = fs.readFileSync(
+            path.join(__dirname, 'sql', 'schema_mundo_cafe.sql'),
+            'utf8'
+        );
+        await pool.query(schemaSql);
+    }
+
+    const demoData = await pool.query(`
+        SELECT
+            (SELECT COUNT(*)::int FROM categorias) AS categorias,
+            (SELECT COUNT(*)::int FROM productos) AS productos,
+            (SELECT COUNT(*)::int FROM usuarios) AS usuarios
+    `);
+    const hasNoDemoData =
+        demoData.rows[0].categorias === 0 &&
+        demoData.rows[0].productos === 0 &&
+        demoData.rows[0].usuarios === 0;
+
+    if (needsSchema || hasNoDemoData) {
+        const seedSql = fs.readFileSync(
+            path.join(__dirname, 'sql', 'seed_mundo_cafe.sql'),
+            'utf8'
+        );
+        await pool.query(seedSql);
     }
 }
 
@@ -900,6 +937,7 @@ app.use((req, res) => {
 async function startServer() {
     try {
         await pool.query('SELECT 1');
+        await initializeDatabaseIfNeeded();
         await ensureDatabaseCompatibility();
         await sincronizarSecuencias();
 
