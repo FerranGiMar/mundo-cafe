@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mundo Café</title>
+    <link rel="stylesheet" href="estilos/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .auth-modal{display:none;position:fixed;z-index:9999;inset:0;background-color:rgba(0,0,0,.6);backdrop-filter:blur(4px);justify-content:center;align-items:center}
+        .auth-modal-card{background:#fff;padding:40px;border-radius:20px;width:90%;max-width:400px;position:relative;box-shadow:0 10px 25px rgba(0,0,0,.2);text-align:center}
+        .auth-modal-close{position:absolute;top:15px;right:20px;font-size:24px;cursor:pointer;color:#666}
+        .auth-modal-title{margin-bottom:20px}
+        .auth-modal-input{width:100%;margin:10px 0;padding:12px;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}
+        .auth-modal-button{background:#111;color:#fff;border:none;padding:14px;border-radius:30px;width:100%;margin-top:20px;cursor:pointer;font-weight:bold}
+        .auth-modal-text{margin-top:15px;font-size:.9rem}
+        .auth-modal-link{color:#88a04b;font-weight:bold}
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="menu container">
+            <a href="index.html" class="logo">
+                <img src="img/logo.png" alt="Mundo Café Logo" style="height: 50px;">
+            </a>
+
+            <nav class="navbar">
+                <ul>
+                    <li><a href="index.html" class="nav-link active-link">INICIO</a></li>
+                    <li><a href="pedirahora.html" class="nav-link">PEDIR AHORA</a></li>
+                    <li><a href="CanjearPuntos.html" class="nav-link">CANJEAR PUNTOS</a></li>
+                    <li><a href="Packs.html" class="nav-link">ESPECIALES</a></li>
+                </ul>
+            </nav>
+
+            <div class="user-actions">
+                <a href="javascript:void(0)" class="join-btn" id="joinBtn" style="display: none;"
+                    onclick="openAuthModal('reg')">ÚNETE</a>
+                <a href="javascript:void(0)" class="login-btn" id="userBtn" style="display: none;"
+                    onclick="openAuthModal('log')">ENTRAR</a>
+
+                <div id="user-profile" class="user-profile-container" style="display: flex;">
+                    <a href="TuPerfil.html" class="profile-button">
+                        <span id="user-display-name" class="profile-name">Mi Perfil</span>
+                    </a>
+                </div>
+
+                <div class="icons-group">
+                    <a href="carrito.html" class="cart-link" id="cart-link-nav">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span id="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="content-area">
+        <section id="coffe-initial" class="coffe">
+            <img class="coffee-img" src="img/bg2.png" alt="granos de café" />
+
+            <div class="coffee-content container">
+                <h2>Qué puedes pedir</h2>
+                <p class="txt-p">
+                    En esta aplicación puedes consultar la carta de la cafetería, elegir productos y hacer pedidos
+                    de forma sencilla. La idea es reunir en una misma web las opciones principales del negocio.
+                </p>
+
+                <div class="coffee-group">
+                    <div class="coffee-1">
+                        <img src="img/c1.png" alt="taza de café">
+                        <h3>Café de especialidad</h3>
+                        <p>
+                            Selección de cafés pensada para quienes buscan sabores más intensos y variedades
+                            diferentes dentro de la carta.
+                        </p>
+                    </div>
+
+                    <div class="coffee-1">
+                        <img src="img/c2.png" alt="taza de café">
+                        <h3>Clásicos imprescindibles</h3>
+                        <p>
+                            Opciones habituales para el día a día, con sabores reconocibles y preparaciones
+                            clásicas.
+                        </p>
+                    </div>
+
+                    <div class="coffee-1">
+                        <img src="img/c3.png" alt="taza de café">
+                        <h3>Tés e infusiones</h3>
+                        <p>
+                            Alternativas al café para ampliar la oferta de la web con bebidas calientes y
+                            opciones sin cafeína.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="nuestros-servicios" class="services">
+            <div class="services container">
+                <div class="services-content container">
+                    <h2>SERVICIOS DISPONIBLES</h2>
+                    <div class="services-group">
+                        <div class="services-1">
+                            <img src="img/i1.svg" alt="icono de envío" />
+                            <h3>Envío</h3>
+                        </div>
+                        <div class="services-1">
+                            <img src="img/i2.svg" alt="icono de recogida" />
+                            <h3>Recogida en tienda</h3>
+                        </div>
+                        <div class="services-1">
+                            <img src="img/i3.svg" alt="icono de pedido programado" />
+                            <h3>Reserva tu próximo café</h3>
+                        </div>
+                    </div>
+                    <p>
+                        La aplicación permite realizar pedidos para envío a domicilio, recogida en tienda
+                        o entrega programada según la necesidad del usuario.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="general">
+            <div class="general-1">
+                <h2>SOBRE LA CARTA</h2>
+                <p>
+                    La carta combina cafés, tés, infusiones, repostería y lotes. El objetivo ha sido
+                    trasladar esa variedad a una web clara y fácil de usar.
+                </p>
+            </div>
+            <div class="general-2"></div>
+        </section>
+
+        <section class="general">
+            <div class="general-3"></div>
+            <div class="general-1">
+                <h2>OBJETIVO DEL PROYECTO</h2>
+                <p>
+                    Este proyecto busca desarrollar una aplicación web para una cafetería donde el usuario pueda
+                    registrarse, hacer pedidos, consultar su perfil y gestionar un sistema de puntos.
+                </p>
+            </div>
+        </section>
+
+        <section class="blog-container">
+            <h2>NUESTRAS CAFETERÍAS</h2>
+            <p>Estas son las ubicaciones principales de Mundo Café.</p>
+
+            <div class="blog-content">
+                <div class="blog-1">
+                    <img src="img/blog1.jpg" alt="cafetería en Mataró">
+                    <h3>📍 Mataró Parc, Mataró</h3>
+                    <p>
+                        <a href="https://maps.app.goo.gl/jFXFWGrb7xmKoJsX8" target="_blank">
+                            Carrer Estrasburg, 5, 08304 Mataró, Barcelona
+                        </a>
+                    </p>
+                </div>
+
+                <div class="blog-1">
+                    <img src="img/blog2.jpg" alt="cafetería en Badalona">
+                    <h3>📍 Centre Comercial Montigalá, Badalona</h3>
+                    <p>
+                        <a href="https://maps.app.goo.gl/V6euyzjDgpD4t5p5A" target="_blank">
+                            Passeig Olof Palme, 36, 08917 Badalona, Barcelona
+                        </a>
+                    </p>
+                </div>
+
+                <div class="blog-1">
+                    <img src="img/blog3.jpg" alt="cafetería en Barcelona">
+                    <h3>📍 Westfield Glòries, Barcelona</h3>
+                    <p>
+                        <a href="https://maps.app.goo.gl/nCi62tiZAQ166piB6" target="_blank">
+                            Av. Diagonal, 208, Sant Martí, 08018 Barcelona
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="link">
+                <a href="https://www.tiktok.com/@ferclain" target="_blank">
+                    <img src="img/tiktok.png" alt="TikTok">
+                </a>
+            </div>
+            <div class="link">
+                <a href="https://www.instagram.com/ferclinain97" target="_blank">
+                    <img src="img/instagram.png" alt="Instagram">
+                </a>
+            </div>
+            <div class="link">
+                <a href="https://x.com/ferrangimenez97" target="_blank">
+                    <img src="img/logo-white.png" alt="X">
+                </a>
+            </div>
+            <div class="link">
+                <a href="https://es.pinterest.com/ferrangimenezm/" target="_blank">
+                    <img src="img/pinterest.png" alt="Pinterest">
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="authModal" class="auth-modal">
+        <div class="auth-modal-card">
+            <span onclick="closeAuthModal()" class="auth-modal-close">&times;</span>
+
+            <div id="loginForm">
+                <h2 class="auth-modal-title">Iniciar sesión</h2>
+                <input type="email" id="logEmail" placeholder="Correo electrónico" class="auth-modal-input">
+                <input type="password" id="logPass" placeholder="Contraseña" class="auth-modal-input">
+                <button type="button" onclick="ejecutarLogin()" class="auth-modal-button">Entrar</button>
+                <p class="auth-modal-text">¿No eres miembro? <a href="javascript:void(0)" onclick="toggleAuth('reg')" class="auth-modal-link">Únete ahora</a></p>
+            </div>
+
+            <div id="registerForm" style="display:none;">
+                <h2 class="auth-modal-title">Crea tu cuenta</h2>
+                <input type="text" id="regName" placeholder="Nombre completo" class="auth-modal-input">
+                <input type="email" id="regEmail" placeholder="Correo electrónico" class="auth-modal-input">
+                <input type="password" id="regPass" placeholder="Crea contraseña" class="auth-modal-input">
+                <button type="button" onclick="ejecutarRegistro()" class="auth-modal-button">Registrarme</button>
+                <p class="auth-modal-text">¿Ya tienes cuenta? <a href="javascript:void(0)" onclick="toggleAuth('log')" class="auth-modal-link">Inicia sesión</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="funciones/auth.js"></script>
+    <script src="funciones/carrito.js"></script>
+    <script src="funciones/index.js"></script>
+</body>
+
+</html>

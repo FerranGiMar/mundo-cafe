@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pedido confirmado | Mundo Café</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="estilos/Confirmación.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    .auth-modal{display:none;position:fixed;z-index:9999;inset:0;background-color:rgba(0,0,0,.6);backdrop-filter:blur(4px);justify-content:center;align-items:center}
+    .auth-modal-card{background:#fff;padding:40px;border-radius:20px;width:90%;max-width:400px;position:relative;box-shadow:0 10px 25px rgba(0,0,0,.2);text-align:center}
+    .auth-modal-close{position:absolute;top:15px;right:20px;font-size:24px;cursor:pointer;color:#666}
+    .auth-modal-title{margin-bottom:20px}
+    .auth-modal-input{width:100%;margin:10px 0;padding:12px;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}
+    .auth-modal-button{background:#111;color:#fff;border:none;padding:14px;border-radius:30px;width:100%;margin-top:20px;cursor:pointer;font-weight:bold}
+    .auth-modal-text{margin-top:15px;font-size:.9rem}
+    .auth-modal-link{color:#88a04b;font-weight:bold}
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="menu container">
+      <a href="index.html" class="logo">
+        <img src="img/logo.png" alt="Mundo Café Logo" style="height:50px;">
+      </a>
+      <nav class="navbar">
+        <ul>
+          <li><a href="index.html" class="nav-link">INICIO</a></li>
+          <li><a href="pedirahora.html" class="nav-link nav-pedir-ahora active-link">PEDIR AHORA</a></li>
+          <li><a href="CanjearPuntos.html" class="nav-link">CANJEAR PUNTOS</a></li>
+          <li><a href="Packs.html" class="nav-link">ESPECIALES</a></li>
+        </ul>
+      </nav>
+      <div class="user-actions">
+        <a href="javascript:void(0)" class="join-btn" id="joinBtn" style="display:none;" onclick="openAuthModal('reg')">ÚNETE</a>
+        <a href="javascript:void(0)" class="login-btn" id="userBtn" style="display:none;" onclick="openAuthModal('log')">ENTRAR</a>
+        <div id="user-profile" class="user-profile-container" style="display:flex;">
+          <a href="TuPerfil.html" class="profile-button">
+            <span id="user-display-name" class="profile-name">Mi Perfil</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="main-container">
+    <div class="confirmation-card fade-in">
+      <div class="success-header">
+        <h1>¡Pedido confirmado!</h1>
+        <p class="order-number" id="order-number">Pedido #--</p>
+      </div>
+
+      <div id="thermal-status" class="thermal-container">
+        <span id="thermal-text">Pedido recibido</span>
+      </div>
+
+      <div class="main-content-layout">
+        <div class="tracking-column">
+          <div id="display-envio" style="display:none;">
+            <div class="tracking-header">
+              <span class="eta-label">Entrega estimada</span>
+              <h2 id="eta-time">Calculando...</h2>
+            </div>
+          </div>
+
+          <div id="display-recogida" class="status-box" style="display:none;">
+            <h3>Punto de recogida</h3>
+            <p><strong id="tienda-elegida">--</strong></p>
+            <p class="pickup-note">Estará listo en unos minutos.</p>
+          </div>
+
+          <div id="display-programado" class="status-box highlight" style="display:none;">
+            <h3>Pedido programado</h3>
+            <p>Día: <strong id="resumen-fecha">--</strong></p>
+            <p>Hora: <strong id="resumen-hora">--</strong></p>
+            <p id="resumen-tienda-programada" style="display:none;">Tienda: <strong id="tienda-programada">--</strong></p>
+          </div>
+
+          <div class="map-container">
+            <div id="map"></div>
+          </div>
+        </div>
+
+        <div class="summary-column">
+          <div class="order-summary-list">
+            <h4>Tu pedido</h4>
+            <div id="lista-productos"></div>
+            <div class="total-line">
+              <span>Total pagado:</span>
+              <span id="total-precio">0,00€</span>
+            </div>
+          </div>
+
+          <div class="shipping-info" id="shipping-info-block" style="display:none;">
+            <h4>Dirección de entrega</h4>
+            <p id="direccion-entrega">--</p>
+          </div>
+
+          <div class="contact-actions">
+            <a href="pedirahora.html" class="btn-contact">
+              Seguir comprando
+            </a>
+          </div>
+
+          <div class="loyalty-card">
+            <div class="loyalty-header">
+              <span>Resumen de puntos</span>
+            </div>
+            <p class="loyalty-msg" id="loyalty-message">Actualizando tu información de puntos.</p>
+            <p id="points-summary" style="margin-top:10px;font-weight:600;"></p>
+            <div class="progress-container">
+              <div class="progress-bar" style="width:0%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <div id="authModal" class="auth-modal">
+    <div class="auth-modal-card">
+      <span onclick="closeAuthModal()" class="auth-modal-close">&times;</span>
+      <div id="loginForm">
+        <h2 class="auth-modal-title">Iniciar sesión</h2>
+        <input type="email" id="logEmail" placeholder="Correo electrónico" class="auth-modal-input">
+        <input type="password" id="logPass" placeholder="Contraseña" class="auth-modal-input">
+        <button type="button" onclick="ejecutarLogin()" class="auth-modal-button">Entrar</button>
+        <p class="auth-modal-text">¿No eres miembro? <a href="javascript:void(0)" onclick="toggleAuth('reg')" class="auth-modal-link">Únete ahora</a></p>
+      </div>
+      <div id="registerForm" style="display:none;">
+        <h2 class="auth-modal-title">Crea tu cuenta</h2>
+        <input type="text" id="regName" placeholder="Nombre completo" class="auth-modal-input">
+        <input type="email" id="regEmail" placeholder="Correo electrónico" class="auth-modal-input">
+        <input type="password" id="regPass" placeholder="Crea contraseña" class="auth-modal-input">
+        <button type="button" onclick="ejecutarRegistro()" class="auth-modal-button">Registrarme</button>
+        <p class="auth-modal-text">¿Ya tienes cuenta? <a href="javascript:void(0)" onclick="toggleAuth('log')" class="auth-modal-link">Inicia sesión</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="funciones/auth.js"></script>
+  <script src="funciones/Confirmación.js"></script>
+</body>
+</html>

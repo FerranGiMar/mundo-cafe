@@ -1,0 +1,289 @@
+/* ================= CONFIGURACIÓN Y VARIABLES ================= */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Montserrat:wght@400;600;700&display=swap');
+
+:root {
+    --primary-green: #A4C639;
+    --primary-terracotta: #ce967b;
+    --dark-coffee: #5c4b3b;
+    --text-main: #3d3129;
+    --text-muted: #6a5d4d;
+    --border-color: #eee;
+    --white: #fff;
+    --black: #000;
+    --bg-main: #fdfaf6;
+    --transition: 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+
+/* === 1. ESTILO GLOBAL === */
+body {
+    background-color: var(--bg-main);
+    background-image: 
+        linear-gradient(rgba(253, 250, 246, 0.5), rgba(253, 250, 246, 0.5)),
+        url("https://www.transparenttextures.com/patterns/stardust.png"); 
+    background-attachment: fixed;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text-main);
+}
+
+/* ================= HEADER PRINCIPAL ================= */
+.header {
+    background-color: var(--white);
+    height: 80px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 1001;
+}
+
+.menu.container {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    padding: 0 40px; 
+    width: 100%; 
+    max-width: 1200px; 
+    margin: 0 auto;
+}
+
+.logo img {
+    display: block;
+}
+
+.navbar ul { display: flex; align-items: center; }
+.navbar li { margin: 0 15px; }
+.navbar .nav-link {
+    color: var(--black); 
+    font-weight: 700; 
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: var(--transition);
+}
+
+.navbar .nav-link:hover, 
+.navbar .active-link { 
+    color: var(--primary-green) 
+}
+
+/* --- Botones de Acceso y Perfil --- */
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.join-btn, .login-btn {
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    text-transform: uppercase;
+}
+
+.join-btn { background: var(--black); color: var(--white); }
+.login-btn { background: transparent; color: var(--black); border: 1px solid var(--black); }
+
+.user-profile-container { display: flex; align-items: center; }
+.profile-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 15px;
+    border-radius: 100px;
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+    background: white;
+    color: var(--text-main);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+.profile-button:hover { border-color: var(--primary-green); background: #fafff0; }
+
+.icons-group {
+    border-left: 1px solid var(--border-color);
+    padding-left: 15px;
+}
+
+.cart-link {
+    position: relative;
+    font-size: 1.2rem;
+    color: var(--text-main);
+}
+
+#cart-count {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: var(--primary-terracotta);
+    color: white;
+    font-size: 0.6rem;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ================= CONTENEDOR CANJEAR ================= */
+.canjear-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* --- Cabecera de Puntos --- */
+.points-card-header {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 35px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    margin-bottom: 40px;
+    border: 1px solid var(--border-color);
+}
+
+.points-stats {
+    text-align: center;
+    padding-right: 40px;
+    border-right: 2px solid var(--border-color);
+    min-width: 180px;
+}
+
+#puntos-actuales-grande {
+    font-size: 4rem;
+    color: var(--dark-coffee);
+    line-height: 1;
+}
+
+.points-info-side { flex-grow: 1; }
+.points-info-side h2 { margin-bottom: 5px; }
+
+/* --- Barra de Progreso --- */
+.progress-milestones-wrapper { margin: 20px 0; }
+
+.progress-bar-container-new {
+    width: 100%; height: 12px;
+    background: #f0f0f0; border-radius: 50px;
+    overflow: hidden; margin-bottom: 10px;
+}
+
+#progress-bar-fill {
+    height: 100%; background: var(--primary-green);
+    width: 0%; transition: width 1s ease-in-out;
+}
+
+.milestones-labels {
+    display: flex; justify-content: space-between;
+    font-size: 0.75rem; font-weight: 700; color: var(--text-muted);
+}
+
+#puntos-faltantes { font-size: 0.9rem; color: var(--text-muted); }
+
+/* ================= GRID DE RECOMPENSAS ================= */
+.rewards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.reward-card {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+    position: relative;
+    cursor: pointer;
+    width: 100%;
+    padding: 0;
+    text-align: left;
+    font: inherit;
+}
+
+.card-img-container {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.card-img-container img {
+    width: 100%; height: 100%; object-fit: cover;
+}
+
+.card-body { padding: 20px; }
+.category-label { font-size: 0.7rem; font-weight: 700; color: var(--primary-terracotta); text-transform: uppercase; }
+.card-body h3 { font-size: 1.1rem; margin: 10px 0; color: var(--black); text-transform: uppercase; }
+.card-description { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+.card-footer {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f9f9f9;
+}
+
+.card-pts { font-weight: 700; color: var(--black); }
+
+.btn-add {
+    background: var(--black); color: white; border: none;
+    width: 35px; height: 35px; border-radius: 50%;
+    cursor: pointer; transition: var(--transition);
+    display: flex; align-items: center; justify-content: center;
+}
+
+/* ================= ESTADOS BLOQUEADOS (B/N Y CANDADO) ================= */
+.reward-card.locked {
+    background: #fdfdfd;
+    cursor: not-allowed;
+}
+
+.reward-card.locked .card-img-container img {
+    filter: grayscale(100%);
+    opacity: 0.5;
+}
+
+.reward-card.locked .lock-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2.5rem;
+    z-index: 2;
+    backdrop-filter: blur(2px);
+}
+
+.reward-card.locked .btn-add {
+    background: #ccc;
+}
+
+.reward-card:not(.locked) .lock-overlay {
+    display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .points-card-header { flex-direction: column; text-align: center; }
+    .points-stats { border-right: none; border-bottom: 2px solid var(--border-color); padding: 0 0 20px 0; margin-bottom: 20px; }
+    .menu.container { padding: 0 20px; }
+    .navbar { display: none; } /* Ocultar nav en móvil o convertir en hamburguesa según necesites */
+}

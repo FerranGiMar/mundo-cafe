@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil | Mundo Café</title>
+
+    <link rel="stylesheet" href="estilos/TuPerfil.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        .auth-modal{display:none;position:fixed;z-index:9999;inset:0;background-color:rgba(0,0,0,.6);backdrop-filter:blur(4px);justify-content:center;align-items:center}
+        .auth-modal-card{background:#fff;padding:40px;border-radius:20px;width:90%;max-width:400px;position:relative;box-shadow:0 10px 25px rgba(0,0,0,.2);text-align:center}
+        .auth-modal-close{position:absolute;top:15px;right:20px;font-size:24px;cursor:pointer;color:#666}
+        .auth-modal-title{margin-bottom:20px}
+        .auth-modal-input{width:100%;margin:10px 0;padding:12px;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}
+        .auth-modal-button{background:#111;color:#fff;border:none;padding:14px;border-radius:30px;width:100%;margin-top:20px;cursor:pointer;font-weight:bold}
+        .auth-modal-text{margin-top:15px;font-size:.9rem}
+        .auth-modal-link{color:#88a04b;font-weight:bold}
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="menu container">
+            <a href="index.html" class="logo">
+                <img src="img/logo.png" alt="Mundo Café Logo" style="height: 50px;">
+            </a>
+
+            <nav class="navbar">
+                <ul>
+                    <li><a href="index.html" class="nav-link">INICIO</a></li>
+                    <li><a href="pedirahora.html" class="nav-link nav-pedir-ahora active-link">PEDIR AHORA</a></li>
+                    <li><a href="CanjearPuntos.html" class="nav-link">CANJEAR PUNTOS</a></li>
+                    <li><a href="Packs.html" class="nav-link">ESPECIALES</a></li>
+                </ul>
+            </nav>
+
+            <div class="user-actions">
+                <a href="javascript:void(0)" class="join-btn" id="joinBtn" style="display: none;"
+                    onclick="openAuthModal('reg')">ÚNETE</a>
+                <a href="javascript:void(0)" class="login-btn" id="userBtn" style="display: none;"
+                    onclick="openAuthModal('log')">ENTRAR</a>
+
+                <div id="user-profile" class="user-profile-container" style="display: flex; align-items: center; gap: 10px;">
+                    <a href="TuPerfil.html" class="profile-button">
+                        <span id="user-display-name" class="profile-name">Mi Perfil</span>
+                    </a>
+
+                    <button type="button" onclick="logout()">Salir</button>
+                </div>
+
+                <div class="icons-group">
+                    <a href="carrito.html" class="cart-link" id="cart-link-nav">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span id="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="profile-layout">
+            <div class="profile-main">
+                <section class="points-hero">
+                    <div class="points-display">
+                        <span class="points-number" id="points-number">0</span>
+                        <span class="points-label">Puntos totales</span>
+                    </div>
+
+                    <div class="points-info">
+                        <h3>Nivel: <span class="highlight-text">Cliente habitual</span></h3>
+                        <p>Cada 1€ gastado se convierte en 10 puntos para futuras recompensas.</p>
+
+                        <div class="progress-container">
+                            <span class="progress-text" id="points-needed-msg">Calculando tu próxima recompensa...</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="profile-card">
+                    <h2 class="section-title">Programa de puntos</h2>
+                    <p class="section-subtitle">Acumula cafés y consigue una recompensa al completar el ciclo.</p>
+                    <div id="stamps-grid" class="stamps-grid"></div>
+                    <div id="status-msg" class="promo-banner">Actualizando tus sellos...</div>
+                </section>
+
+                <section class="profile-card">
+                    <h2 class="section-title">Historial de pedidos</h2>
+                    <div class="history-table-wrapper">
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Productos</th>
+                                    <th>Total</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-body"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <aside class="profile-sidebar">
+                <section class="profile-card">
+                    <h3 class="sidebar-title">Datos personales</h3>
+                    <form id="profile-form" class="personal-data-form">
+                        <div class="form-group">
+                            <label>Nombre completo</label>
+                            <input type="text" id="full-name" placeholder="Tu nombre aparecerá aquí">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Correo de acceso</label>
+                            <input type="email" id="user-email" value="" readonly class="readonly-input">
+                            <small>No se puede editar desde aquí.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Teléfono</label>
+                            <input type="tel" id="user-phone" placeholder="+34 600 000 000">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Dirección habitual</label>
+                            <input type="text" id="user-address" placeholder="Tu calle y número">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tu cafetería favorita</label>
+                            <select id="user-store">
+                                <option value="Mataró Parc">Mataró Parc - Mataró</option>
+                                <option value="CC Montigalá">CC Montigalá - Badalona</option>
+                                <option value="Westfield Glories">Westfield Glòries - Barcelona</option>
+                            </select>
+                        </div>
+
+                        <button type="button" class="save-btn" id="save-profile-btn">Guardar cambios</button>
+                    </form>
+                </section>
+            </aside>
+        </div>
+    </main>
+
+    <div id="authModal" class="auth-modal">
+        <div class="auth-modal-card">
+            <span onclick="closeAuthModal()" class="auth-modal-close">&times;</span>
+
+            <div id="loginForm">
+                <h2 class="auth-modal-title">Iniciar sesión</h2>
+                <input type="email" id="logEmail" placeholder="Correo electrónico" class="auth-modal-input">
+                <input type="password" id="logPass" placeholder="Contraseña" class="auth-modal-input">
+                <button type="button" onclick="ejecutarLogin()" class="auth-modal-button">Entrar</button>
+                <p class="auth-modal-text">¿No eres miembro? <a href="javascript:void(0)" onclick="toggleAuth('reg')" class="auth-modal-link">Únete ahora</a></p>
+            </div>
+
+            <div id="registerForm" style="display:none;">
+                <h2 class="auth-modal-title">Crea tu cuenta</h2>
+                <input type="text" id="regName" placeholder="Nombre completo" class="auth-modal-input">
+                <input type="email" id="regEmail" placeholder="Correo electrónico" class="auth-modal-input">
+                <input type="password" id="regPass" placeholder="Crea contraseña" class="auth-modal-input">
+                <button type="button" onclick="ejecutarRegistro()" class="auth-modal-button">Registrarme</button>
+                <p class="auth-modal-text">¿Ya tienes cuenta? <a href="javascript:void(0)" onclick="toggleAuth('log')" class="auth-modal-link">Inicia sesión</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="funciones/auth.js"></script>
+    <script src="funciones/carrito.js"></script>
+    <script src="funciones/TuPerfil.js"></script>
+</body>
+</html>

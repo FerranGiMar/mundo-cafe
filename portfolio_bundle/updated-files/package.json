@@ -1,0 +1,26 @@
+{
+  "name": "mundo-cafe",
+  "version": "2.0.0",
+  "description": "Aplicación web full stack para la gestión de pedidos y fidelización de una cafetería.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node tests/helpers.test.js"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "postgresql",
+    "portfolio",
+    "cafeteria"
+  ],
+  "author": "Ferran Gimenez",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "pg": "^8.20.0"
+  }
+}

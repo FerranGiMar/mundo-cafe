@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mundo Café — Carrito</title>
+  <link rel="stylesheet" href="estilos/carrito.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    .auth-modal{display:none;position:fixed;z-index:9999;inset:0;background-color:rgba(0,0,0,.6);backdrop-filter:blur(4px);justify-content:center;align-items:center}
+    .auth-modal-card{background:#fff;padding:40px;border-radius:20px;width:90%;max-width:400px;position:relative;box-shadow:0 10px 25px rgba(0,0,0,.2);text-align:center}
+    .auth-modal-close{position:absolute;top:15px;right:20px;font-size:24px;cursor:pointer;color:#666}
+    .auth-modal-title{margin-bottom:20px}
+    .auth-modal-input{width:100%;margin:10px 0;padding:12px;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}
+    .auth-modal-button{background:#111;color:#fff;border:none;padding:14px;border-radius:30px;width:100%;margin-top:20px;cursor:pointer;font-weight:bold}
+    .auth-modal-text{margin-top:15px;font-size:.9rem}
+    .auth-modal-link{color:#88a04b;font-weight:bold}
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="menu container">
+      <a href="index.html" class="logo">
+        <img src="img/logo.png" alt="Mundo Café Logo" style="height: 50px;">
+      </a>
+      <nav class="navbar">
+        <ul>
+          <li><a href="index.html" class="nav-link">INICIO</a></li>
+          <li><a href="pedirahora.html" class="nav-link nav-pedir-ahora active-link">PEDIR AHORA</a></li>
+          <li><a href="CanjearPuntos.html" class="nav-link">CANJEAR PUNTOS</a></li>
+          <li><a href="Packs.html" class="nav-link">ESPECIALES</a></li>
+        </ul>
+      </nav>
+      <div class="user-actions">
+        <a href="javascript:void(0)" class="join-btn" id="joinBtn" style="display:none;" onclick="openAuthModal('reg')">ÚNETE</a>
+        <a href="javascript:void(0)" class="login-btn" id="userBtn" style="display:none;" onclick="openAuthModal('log')">ENTRAR</a>
+        <div id="user-profile" class="user-profile-container" style="display:flex;">
+          <a href="TuPerfil.html" class="profile-button">
+            <span id="user-display-name" class="profile-name">Mi Perfil</span>
+          </a>
+        </div>
+        <div class="icons-group">
+          <a href="carrito.html" class="cart-link" id="cart-link-nav">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span id="cart-count">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <aside class="cart" aria-label="Carrito de compra">
+      <h2>Tu selección</h2>
+
+      <div class="cart-list" id="cartList"></div>
+
+      <div class="totals">
+        <span>PRECIO TOTAL</span>
+        <div id="subtotal">0,00 €</div>
+      </div>
+      <div id="shippingPromo" class="shipping-promo">
+        Envío gratis a partir de 20€
+      </div>
+
+      <form id="checkoutForm">
+        <fieldset>
+          <legend>Método de entrega</legend>
+          <div class="delivery-options">
+            <label><input type="radio" name="delivery" value="home" checked> Envío</label>
+            <label><input type="radio" name="delivery" value="clickcollect"> Recogida</label>
+            <label><input type="radio" name="delivery" value="schedule"> Programar</label>
+          </div>
+
+          <div id="homeFields" class="delivery-section">
+            <input type="text" id="input-calle" placeholder="Nombre de la calle">
+            <div style="display:flex;gap:10px;margin-top:10px;">
+              <input type="text" id="input-numero" placeholder="Nº edificio" style="width:40%;">
+              <input type="text" id="input-cp" placeholder="Código postal" maxlength="5" style="width:60%;">
+            </div>
+            <div style="display:flex;gap:10px;margin-top:10px;">
+              <input type="text" id="input-planta" placeholder="Planta" style="width:50%;">
+              <input type="text" id="input-puerta" placeholder="Puerta" style="width:50%;">
+            </div>
+          </div>
+
+          <div id="clickFields" class="delivery-section" style="display:none;">
+            <select id="shopSelect">
+              <option disabled selected value="">Selecciona tu punto de recogida</option>
+              <option value="Mataró Parc">Mataró Parc, Mataró</option>
+              <option value="CC Montigalá">Centre Comercial Montigalá, Badalona</option>
+              <option value="Westfield Glories">Westfield Glòries, Barcelona</option>
+            </select>
+          </div>
+
+          <div id="scheduleFields" class="delivery-section" style="display:none;">
+            <div style="display:flex;gap:10px;margin-bottom:10px;">
+              <input type="date" id="deliveryDate" style="flex:1;">
+              <input type="time" id="deliveryTime" style="flex:1;">
+            </div>
+            <select id="shopSelectSchedule">
+              <option disabled selected value="">Tienda donde recoger</option>
+              <option value="Mataró Parc">Mataró Parc, Mataró</option>
+              <option value="CC Montigalá">Centre Comercial Montigalá, Badalona</option>
+              <option value="Westfield Glories">Westfield Glòries, Barcelona</option>
+            </select>
+          </div>
+        </fieldset>
+
+        <fieldset id="paymentMethod">
+          <legend>Método de pago</legend>
+          <div class="delivery-options">
+            <label><input type="radio" name="payment" value="card" checked> Tarjeta</label>
+            <label id="labelPagoTienda"><input type="radio" name="payment" value="store"> En tienda</label>
+          </div>
+          <div id="cardFields" class="delivery-section" style="margin-top:20px;">
+            <input type="text" id="cardHolder" placeholder="NOMBRE DEL TITULAR">
+            <input type="text" id="cardNumber" placeholder="NÚMERO DE TARJETA" maxlength="16">
+            <div style="display:flex;gap:20px;">
+              <input type="text" id="cardExpiry" placeholder="MM/AA" maxlength="5">
+              <input type="password" id="cardCVC" placeholder="CVC" maxlength="3">
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset id="deliveryFields">
+          <legend>Contacto y notas</legend>
+          <input type="text" id="phone" placeholder="TELÉFONO DE CONTACTO" maxlength="9">
+          <div style="margin-top:15px;">
+            <label style="font-size:11px;color:#ce967b;font-weight:700;letter-spacing:1px;display:block;margin-bottom:8px;">Notas del pedido</label>
+            <textarea id="orderNotes" placeholder="Sin azúcar, leche de avena, alergias..." rows="3"></textarea>
+          </div>
+        </fieldset>
+
+        <div class="cart-buttons">
+          <button type="button" id="clearCart" class="ghost">Vaciar carrito</button>
+          <button type="button" id="confirmOrder" class="btn-confirm">Confirmar pedido</button>
+        </div>
+      </form>
+    </aside>
+  </main>
+
+  <div id="authModal" class="auth-modal">
+    <div class="auth-modal-card">
+      <span onclick="closeAuthModal()" class="auth-modal-close">&times;</span>
+      <div id="loginForm">
+        <h2 class="auth-modal-title">Iniciar sesión</h2>
+        <input type="email" id="logEmail" placeholder="Correo electrónico" class="auth-modal-input">
+        <input type="password" id="logPass" placeholder="Contraseña" class="auth-modal-input">
+        <button type="button" onclick="ejecutarLogin()" class="auth-modal-button">Entrar</button>
+        <p class="auth-modal-text">¿No eres miembro? <a href="javascript:void(0)" onclick="toggleAuth('reg')" class="auth-modal-link">Únete ahora</a></p>
+      </div>
+      <div id="registerForm" style="display:none;">
+        <h2 class="auth-modal-title">Crea tu cuenta</h2>
+        <input type="text" id="regName" placeholder="Nombre completo" class="auth-modal-input">
+        <input type="email" id="regEmail" placeholder="Correo electrónico" class="auth-modal-input">
+        <input type="password" id="regPass" placeholder="Crea contraseña" class="auth-modal-input">
+        <button type="button" onclick="ejecutarRegistro()" class="auth-modal-button">Registrarme</button>
+        <p class="auth-modal-text">¿Ya tienes cuenta? <a href="javascript:void(0)" onclick="toggleAuth('log')" class="auth-modal-link">Inicia sesión</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="funciones/auth.js"></script>
+  <script src="funciones/carrito.js"></script>
+</body>
+</html>

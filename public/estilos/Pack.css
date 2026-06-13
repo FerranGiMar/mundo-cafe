@@ -1,0 +1,329 @@
+
+/* ================= CONFIGURACIÓN Y VARIABLES ================= */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Montserrat:wght@400;600;700&display=swap');
+
+:root {
+    --primary-green: #A4C639;
+    --primary-terracotta: #ce967b;
+    --dark-coffee: #5c4b3b;
+    --text-main: #3d3129;
+    --text-muted: #6a5d4d;
+    --border-color: #eee;
+    --white: #fff;
+    --black: #000;
+    --bg-main: #fdfaf6;
+    --transition: 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+
+/* === 1. ESTILO GLOBAL === */
+body {
+    background-color: var(--bg-main);
+    background-image: 
+        linear-gradient(rgba(253, 250, 246, 0.5), rgba(253, 250, 246, 0.5)),
+        url("https://www.transparenttextures.com/patterns/stardust.png"); 
+    background-attachment: fixed;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text-main);
+}
+
+/* ================= HEADER PRINCIPAL ================= */
+.header {
+    background-color: var(--white);
+    height: 80px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 1001;
+}
+
+.menu.container {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    padding: 0 40px; 
+    width: 100%; 
+    max-width: 1200px; 
+    margin: 0 auto;
+}
+
+.logo img {
+    display: block;
+}
+
+.navbar ul { display: flex; align-items: center; }
+.navbar li { margin: 0 15px; }
+.navbar .nav-link {
+    color: var(--black); 
+    font-weight: 700; 
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: var(--transition);
+}
+
+.navbar .nav-link:hover, 
+.navbar .active-link { 
+    color: var(--primary-green); 
+}
+
+/* --- Botones de Acceso y Perfil --- */
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.join-btn, .login-btn {
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    text-transform: uppercase;
+}
+
+.join-btn { background: var(--black); color: var(--white); }
+.login-btn { background: transparent; color: var(--black); border: 1px solid var(--black); }
+
+.user-profile-container { display: flex; align-items: center; }
+.profile-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 15px;
+    border-radius: 100px;
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+    background: white;
+    color: var(--text-main);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+.profile-button:hover { border-color: var(--primary-green); background: #fafff0; }
+
+.icons-group {
+    border-left: 1px solid var(--border-color);
+    padding-left: 15px;
+}
+
+.cart-link {
+    position: relative;
+    font-size: 1.2rem;
+    color: var(--text-main);
+}
+
+#cart-count {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: var(--primary-terracotta);
+    color: white;
+    font-size: 0.6rem;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ================= NAVBAR DE PRODUCTOS ================= */
+nav.sidebar {
+    background: var(--white);
+    border-bottom: 1px solid var(--border-color);
+    width: 100%;
+    position: sticky;
+    top: 80px; /* Debajo del header principal */
+    z-index: 1000;
+}
+
+nav.sidebar ul {
+    display: flex;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.nav-item { position: relative; }
+
+.nav-item a {
+    color: var(--text-muted);
+    font-weight: 700;
+    font-size: 14px;
+    padding: 20px 25px;
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.nav-item a:hover, .nav-item.active a { color: var(--primary-green); }
+
+.nav-item.active::after {
+    content: ""; position: absolute; bottom: 0; left: 0;
+    width: 100%; height: 4px; background-color: var(--primary-green);
+    border-radius: 2px 2px 0 0;
+}
+
+/* ================= GRID DE PRODUCTOS ================= */
+/* Se corrigió para que el JS pueda ocultar/mostrar secciones */
+.content-section {
+    display: none; /* Por defecto ocultas */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 3rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Clase para mostrar con el grid activo */
+.content-section.visible {
+    display: grid;
+}
+
+.product-card {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #f2f2f2;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+
+.product-image-container { width: 100%; height: 200px; overflow: hidden; position: relative; }
+.product-image-container img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s ease; }
+.product-card:hover img { transform: scale(1.05); }
+
+.product-info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+
+.pack-tag {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1.2px; color: #8d7b68; margin-bottom: 8px; display: block;
+}
+
+.product-name {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem; font-weight: 700; letter-spacing: 0.5px;
+    text-transform: uppercase; color: #2c2c2c; margin-bottom: 10px;
+}
+
+.product-description { font-size: 0.85rem; line-height: 1.6; color: #666; margin-bottom: 15px; }
+
+.product-action { padding: 0 20px 20px 20px; display: flex; justify-content: space-between; align-items: center; }
+.product-price { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.1rem; color: #2c2c2c; }
+
+.add-to-cart {
+    background-color: #2c2c2c; color: #ffffff; border: none;
+    width: 35px; height: 35px; border-radius: 50%; cursor: pointer;
+    font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
+    transition: 0.3s ease;
+}
+
+/* ================= MODALES (SISTEMA UNIFICADO) ================= */
+.modal-overlay, .modal, #auth-modal, #pack-wizard {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    display: none; 
+    align-items: center;
+    justify-content: center;
+    z-index: 5000;
+}
+
+.modal-content {
+    background: var(--white);
+    padding: 40px;
+    border-radius: 25px;
+    width: 95%;
+    max-width: 420px;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+    text-align: center;
+}
+
+.close-modal, .close-btn {
+    position: absolute; top: 20px; right: 20px;
+    font-size: 24px; cursor: pointer; color: var(--text-muted);
+    line-height: 1;
+}
+
+/* --- Estilos Auth (Pestañas) --- */
+.modal-tabs { display: flex; justify-content: center; gap: 30px; margin-bottom: 30px; }
+.tab-btn {
+    background: none; border: none; font-family: 'Montserrat', sans-serif;
+    font-weight: 700; font-size: 14px; text-transform: uppercase;
+    color: var(--text-muted); cursor: pointer; padding-bottom: 5px; transition: 0.3s;
+}
+.tab-btn.active { color: var(--black); border-bottom: 3px solid var(--primary-green); }
+
+/* --- Estilos Pack Wizard --- */
+.size-selector {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px;
+}
+.size-btn {
+    padding: 15px; background: #fff; border: 1px solid #eee;
+    border-radius: 15px; cursor: pointer; display: flex; flex-direction: column;
+    transition: 0.3s; align-items: center;
+}
+.size-btn:hover { border-color: var(--primary-green); background: #fafff0; }
+.size-btn .qty { font-weight: 700; font-size: 1.1rem; margin-bottom: 5px; }
+.size-btn .price { font-size: 0.8rem; color: var(--text-muted); }
+
+.drinks-selection-grid {
+    max-height: 300px; overflow-y: auto; margin: 20px 0; padding-right: 10px;
+}
+
+/* Scrollbar personalizado para el grid de bebidas */
+.drinks-selection-grid::-webkit-scrollbar { width: 6px; }
+.drinks-selection-grid::-webkit-scrollbar-thumb { background: #ddd; border-radius: 10px; }
+
+/* --- Formularios, Selects y Botones Comunes --- */
+.modal-form input, select, .pack-drink-select {
+    width: 100%; padding: 12px; margin: 8px 0;
+    border: 1px solid var(--border-color); border-radius: 12px;
+    font-family: 'Montserrat', sans-serif; outline: none; background: #f9f9f9;
+}
+
+.auth-submit, .btn-confirm-add {
+    background: var(--black); color: #fff; border: none;
+    padding: 14px; border-radius: 30px; width: 100%;
+    margin-top: 20px; cursor: pointer; font-weight: bold; 
+    transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;
+}
+
+.auth-submit:hover, .btn-confirm-add:hover:not(:disabled) { background: #333; transform: scale(1.02); }
+.btn-confirm-add:disabled { background: #ccc; cursor: not-allowed; }
+
+.btn-back { 
+    background: none; border: none; margin-top: 15px; cursor: pointer; 
+    color: #888; text-decoration: underline; font-family: 'Montserrat', sans-serif;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+    .menu.container { padding: 0 20px; }
+    .header { height: 70px; }
+    nav.sidebar { top: 70px; }
+    nav.sidebar ul { justify-content: flex-start; overflow-x: auto; padding: 0 10px; }
+    .nav-item a { padding: 15px 10px; white-space: nowrap; font-size: 12px; }
+    .user-actions { gap: 10px; }
+    .user-actions .join-btn, .user-actions .login-btn { min-width: 100px; padding: 8px 15px; font-size: 11px; }
+}

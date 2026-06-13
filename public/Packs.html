@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lotes | Mundo Café</title>
+    <link rel="stylesheet" href="estilos/Pack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .auth-modal{display:none;position:fixed;z-index:9999;inset:0;background-color:rgba(0,0,0,.6);backdrop-filter:blur(4px);justify-content:center;align-items:center}
+        .auth-modal-card{background:#fff;padding:40px;border-radius:20px;width:90%;max-width:400px;position:relative;box-shadow:0 10px 25px rgba(0,0,0,.2);text-align:center}
+        .auth-modal-close{position:absolute;top:15px;right:20px;font-size:24px;cursor:pointer;color:#666}
+        .auth-modal-title{margin-bottom:20px}
+        .auth-modal-input{width:100%;margin:10px 0;padding:12px;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}
+        .auth-modal-button{background:#111;color:#fff;border:none;padding:14px;border-radius:30px;width:100%;margin-top:20px;cursor:pointer;font-weight:bold}
+        .auth-modal-text{margin-top:15px;font-size:.9rem}
+        .auth-modal-link{color:#88a04b;font-weight:bold}
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="menu container">
+            <a href="index.html" class="logo">
+                <img src="img/logo.png" alt="Mundo Café Logo" style="height: 50px;">
+            </a>
+
+            <nav class="navbar">
+                <ul>
+                    <li><a href="index.html" class="nav-link">INICIO</a></li>
+                    <li><a href="pedirahora.html" class="nav-link">PEDIR AHORA</a></li>
+                    <li><a href="CanjearPuntos.html" class="nav-link">CANJEAR PUNTOS</a></li>
+                    <li><a href="Packs.html" class="nav-link active-link">ESPECIALES</a></li>
+                </ul>
+            </nav>
+
+            <div class="user-actions">
+                <a href="javascript:void(0)" class="join-btn" id="joinBtn" style="display: none;"
+                    onclick="openAuthModal('reg')">ÚNETE</a>
+                <a href="javascript:void(0)" class="login-btn" id="userBtn" style="display: none;"
+                    onclick="openAuthModal('log')">ENTRAR</a>
+
+                <div id="user-profile" class="user-profile-container" style="display: flex;">
+                    <a href="TuPerfil.html" class="profile-button">
+                        <span id="user-display-name" class="profile-name">Mi Perfil</span>
+                    </a>
+                </div>
+
+                <div class="icons-group">
+                    <a href="carrito.html" class="cart-link" id="cart-link-nav">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span id="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <nav class="sidebar">
+            <ul>
+                <li class="nav-item active" data-section="cafes-section">
+                    <a href="#cafes-section">Tostadas</a>
+                </li>
+                <li class="nav-item" data-section="tes-section">
+                    <a href="#tes-section">Cruasanes</a>
+                </li>
+                <li class="nav-item" data-section="otrasbebidas-section">
+                    <a href="#otrasbebidas-section">Lotes</a>
+                </li>
+            </ul>
+        </nav>
+
+        <section id="cafes-section" class="content-section visible">
+            <div class="product-card" data-id="7" data-type="producto">
+                <div class="product-image-container">
+                    <img src="img/GreenStandard.jpg" alt="Tostada de aguacate y huevo">
+                </div>
+                <div class="product-info">
+                    <span class="pack-tag">Aguacate</span>
+                    <h3 class="product-name">Tostada de aguacate y huevo</h3>
+                    <p class="product-description">Tostada con aguacate, huevo, sésamo y un toque suave de lima.</p>
+                </div>
+                <div class="product-action">
+                    <p class="product-price">4,50€</p>
+                    <button type="button" class="add-to-cart">+</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-id="6" data-type="producto">
+                <div class="product-image-container">
+                    <img src="img/wellnes7.jpg" alt="Tostada de hummus y aguacate">
+                </div>
+                <div class="product-info">
+                    <span class="pack-tag">Hummus</span>
+                    <h3 class="product-name">Tostada de hummus y aguacate</h3>
+                    <p class="product-description">Pan de semillas con hummus, aguacate, huevo rallado y brotes tiernos.</p>
+                </div>
+                <div class="product-action">
+                    <p class="product-price">9,99€</p>
+                    <button type="button" class="add-to-cart">+</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-id="7" data-type="producto">
+                <div class="product-image-container">
+                    <img src="img/essentialAvocado.png" alt="Tostada doble de aguacate">
+                </div>
+                <div class="product-info">
+                    <span class="pack-tag">Doble aguacate</span>
+                    <h3 class="product-name">Tostada doble de aguacate</h3>
+                    <p class="product-description">Pan de centeno con doble ración de aguacate, huevo cocido y sal en escamas.</p>
+                </div>
+                <div class="product-action">
+                    <p class="product-price">9,99€</p>
+                    <button type="button" class="add-to-cart">+</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-id="8" data-type="producto">
+                <div class="product-image-container">
+                    <img src="img/SpicyQueen.png" alt="Tostada picante de aguacate">
+                </div>
+                <div class="product-info">
+                    <span class="pack-tag">Picante</span>
+                    <h3 class="product-name">Tostada picante de aguacate</h3>
+                    <p class="product-description">Aguacate, huevo cocido, cebolla encurtida y copos de chile.</p>
+                </div>
+                <div class="product-action">
+                    <p class="product-price">9,99€</p>
+                    <button type="button" class="add-to-cart">+</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-id="8" data-type="producto">
+                <div class="product-image-container">
+                    <img src="img/truffle.png" alt="Tostada de trufa y aguacate">
+                </div>
+                <div class="product-info">
+                    <span class="pack-tag">Trufa</span>
+                    <h3 class="product-name">Tostada de trufa y aguacate</h3>
+                    <p class="product-description">Pan de masa madre con crema trufada, aguacate, huevo rallado y pistachos.</p>
+                </div>
+                <div class="product-action">
+                    <p class="product-price">5,90€</p>
+                    <button type="button" class="add-to-cart">+</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-id="9" data-type="producto">
+                <div class="product-image-container">
+                    <img src="img/golden.png" alt="Tostada de queso y tomate seco">
+                </div>
+                <div class="product-info">
+                    <span class="pack-tag">Queso de cabra</span>
+                    <h3 class="product-name">Tostada de queso y tomate seco</h3>
+                    <p class="product-description">Aguacate, huevo, tomate seco, queso de cabra y un toque de balsámico.</p>
+                </div>
+                <div class="product-action">
+                    <p class="product-price">5,90€</p>
+                    <button type="button" class="add-to-cart">+</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="tes-section" class="content-section hidden">
+            <div class="product-card" data-id="10" data-type="producto">
+                <div class="product-image-container">
+                    <img src="img/CrusanPistacho.jpg" alt="Cruasán de pistacho">
+                </div>
+                <div class="product-info">
+                    <span class="pack-tag">Pistacho</span>
+                    <h3 class="product-name">Cruasán de pistacho</h3>
+                    <p class="product-description">Cruasán relleno de crema de pistacho.</p>
+                </div>
+                <div class="product-action">
+                    <p class="product-price">5,90€</p>
+                    <button type="button" class="add-to-cart">+</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-id="11" data-type="producto">
+                <div class="product-image-container">
+                    <img src="img/Kinder.jpg" alt="Cruasán de chocolate">
+                </div>
+                <div class="product-info">
+                    <span class="pack-tag">Chocolate</span>
+                    <h3 class="product-name">Cruasán de chocolate</h3>
+                    <p class="product-description">Cruasán relleno de crema suave de chocolate.</p>
+                </div>
+                <div class="product-action">
+                    <p class="product-price">5,90€</p>
+                    <button type="button" class="add-to-cart">+</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-id="12" data-type="producto">
+                <div class="product-image-container">
+                    <img src="img/HappyHippo.jpg" alt="Cruasán de avellana">
+                </div>
+                <div class="product-info">
+                    <span class="pack-tag">Avellana</span>
+                    <h3 class="product-name">Cruasán de avellana</h3>
+                    <p class="product-description">Cruasán con relleno cremoso de avellana.</p>
+                </div>
+                <div class="product-action">
+                    <p class="product-price">5,90€</p>
+                    <button type="button" class="add-to-cart">+</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-id="13" data-type="producto">
+                <div class="product-image-container">
+                    <img src="img/CruasanLotus.jpg" alt="Cruasán Lotus">
+                </div>
+                <div class="product-info">
+                    <span class="pack-tag">Lotus</span>
+                    <h3 class="product-name">Cruasán Lotus</h3>
+                    <p class="product-description">Cruasán relleno de crema Lotus con galleta por encima.</p>
+                </div>
+                <div class="product-action">
+                    <p class="product-price">5,90€</p>
+                    <button type="button" class="add-to-cart">+</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-id="10" data-type="producto">
+                <div class="product-image-container">
+                    <img src="img/CruasanSimple.jpg" alt="Cruasán clásico">
+                </div>
+                <div class="product-info">
+                    <span class="pack-tag">Clásico</span>
+                    <h3 class="product-name">Cruasán clásico</h3>
+                    <p class="product-description">Cruasán de mantequilla con elaboración tradicional.</p>
+                </div>
+                <div class="product-action">
+                    <p class="product-price">5,90€</p>
+                    <button type="button" class="add-to-cart">+</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-id="13" data-type="producto">
+                <div class="product-image-container">
+                    <img src="img/crusanceeral.png" alt="Cruasán de cereales">
+                </div>
+                <div class="product-info">
+                    <span class="pack-tag">Cereales</span>
+                    <h3 class="product-name">Cruasán de cereales</h3>
+                    <p class="product-description">Cruasán integral con mezcla de cereales y semillas tostadas.</p>
+                </div>
+                <div class="product-action">
+                    <p class="product-price">5,90€</p>
+                    <button type="button" class="add-to-cart">+</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="otrasbebidas-section" class="content-section hidden">
+            <div class="product-card" data-id="3" data-type="menu">
+                <div class="product-image-container">
+                    <img src="img/Cumpleaños.jpg" alt="Lote cumpleaños">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">LOTE CUMPLEAÑOS</h3>
+                    <p class="product-description">Bizcocho a elegir con decoración personalizada y una bebida.</p>
+                </div>
+                <div class="product-action">
+                    <p class="product-price">8,99€</p>
+                    <button type="button" class="add-to-cart">+</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-id="4" data-type="menu">
+                <div class="product-image-container">
+                    <img src="img/Best seller.jpg" alt="Lote variado">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">LOTE VARIADO</h3>
+                    <p class="product-description">Incluye tostadas, dulces y bebidas para compartir.</p>
+                </div>
+                <div class="product-action">
+                    <p class="product-price">19,99€</p>
+                    <button type="button" class="add-to-cart">+</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-id="2" data-type="menu">
+                <div class="product-image-container">
+                    <img src="img/equipo.png" alt="Lote para compartir">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">LOTE PARA COMPARTIR</h3>
+                    <p class="product-description">Tostadas, cruasanes y bebidas pensadas para varias personas.</p>
+                </div>
+                <div class="product-action">
+                    <p class="product-price">15,99€</p>
+                    <button type="button" class="add-to-cart">+</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-id="1" data-type="menu">
+                <div class="product-image-container">
+                    <img src="img/activadi.png" alt="Lote de cafés">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">LOTE DE CAFÉS</h3>
+                    <p class="product-description">Elige varias bebidas calientes en un solo pedido.</p>
+                </div>
+                <div class="product-action">
+                    <p class="product-price">9,99€</p>
+                    <button type="button" class="add-to-cart" onclick="openPackWizard()">+</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-id="1" data-type="menu">
+                <div class="product-image-container">
+                    <img src="img/domingo.png" alt="Lote desayuno">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">LOTE DESAYUNO</h3>
+                    <p class="product-description">Tostada o repostería con una bebida.</p>
+                </div>
+                <div class="product-action">
+                    <p class="product-price">5,80€</p>
+                    <button type="button" class="add-to-cart">+</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="pack-wizard" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closePackWizard()">&times;</span>
+
+            <div id="step-1">
+                <h3 class="modal-title">LOTE PERSONALIZADO</h3>
+                <p class="modal-subtitle">Selecciona cuántas bebidas quieres añadir.</p>
+                <div class="size-selector">
+                    <button type="button" class="size-btn" onclick="selectPackSize(2, '5.50€')">
+                        <span class="qty">x2</span>
+                        <span class="price">5,50€</span>
+                    </button>
+                    <button type="button" class="size-btn" onclick="selectPackSize(4, '10.50€')">
+                        <span class="qty">x4</span>
+                        <span class="price">10,50€</span>
+                    </button>
+                    <button type="button" class="size-btn" onclick="selectPackSize(6, '15.00€')">
+                        <span class="qty">x6</span>
+                        <span class="price">15,00€</span>
+                    </button>
+                    <button type="button" class="size-btn" onclick="selectPackSize(8, '18.50€')">
+                        <span class="qty">x8</span>
+                        <span class="price">18,50€</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="step-2" style="display: none;">
+                <h3 class="modal-title">PERSONALIZA TU LOTE</h3>
+                <p class="modal-subtitle">Elige tus <span id="max-qty">0</span> bebidas favoritas:</p>
+
+                <div id="drinks-container" class="drinks-selection-grid"></div>
+
+                <div class="pack-footer">
+                    <p id="pack-summary">Seleccionadas: 0 / 0</p>
+                    <button type="button" id="add-pack-btn" class="btn-confirm-add" disabled onclick="confirmPack()">
+                        AÑADIR AL CARRITO
+                    </button>
+                    <button type="button" class="btn-back-link" onclick="volverATamanos()">Volver a tamaños</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="authModal" class="auth-modal">
+        <div class="auth-modal-card">
+            <span onclick="closeAuthModal()" class="auth-modal-close">&times;</span>
+
+            <div id="loginForm">
+                <h2 class="auth-modal-title">Iniciar sesión</h2>
+                <input type="email" id="logEmail" placeholder="Correo electrónico" class="auth-modal-input">
+                <input type="password" id="logPass" placeholder="Contraseña" class="auth-modal-input">
+                <button type="button" onclick="ejecutarLogin()" class="auth-modal-button">Entrar</button>
+                <p class="auth-modal-text">¿No eres miembro? <a href="javascript:void(0)" onclick="toggleAuth('reg')" class="auth-modal-link">Únete ahora</a></p>
+            </div>
+
+            <div id="registerForm" style="display:none;">
+                <h2 class="auth-modal-title">Crea tu cuenta</h2>
+                <input type="text" id="regName" placeholder="Nombre completo" class="auth-modal-input">
+                <input type="email" id="regEmail" placeholder="Correo electrónico" class="auth-modal-input">
+                <input type="password" id="regPass" placeholder="Crea contraseña" class="auth-modal-input">
+                <button type="button" onclick="ejecutarRegistro()" class="auth-modal-button">Registrarme</button>
+                <p class="auth-modal-text">¿Ya tienes cuenta? <a href="javascript:void(0)" onclick="toggleAuth('log')" class="auth-modal-link">Inicia sesión</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="funciones/auth.js"></script>
+    <script src="funciones/carrito.js"></script>
+    <script src="funciones/Pack.js"></script>
+</body>
+</html>
