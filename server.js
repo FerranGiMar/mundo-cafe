@@ -30,7 +30,7 @@ const pool = new Pool(
     process.env.DATABASE_URL
         ? {
             connectionString: process.env.DATABASE_URL,
-            ssl: process.env.DATABASE_SSL === 'true' ? { rejectUnauthorized: false } : false
+            ssl: { rejectUnauthorized: false }
         }
         : {
             user: process.env.DB_USER || 'postgres',
